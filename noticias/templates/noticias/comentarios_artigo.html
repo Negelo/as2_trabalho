@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head><title>Comentários - {{ artigo.titulo }}</title></head>
+<body>
+    <h1>Comentários: {{ artigo.titulo }}</h1>
+    <hr>
+    
+    <ul>
+      {% for comentario in comentarios %}
+        <li style="margin-bottom: 10px;">
+            <strong>Anónimo:</strong> {{ comentario.texto }} 
+            <br>
+            <small style="color: gray;">({{ comentario.data_criacao|date:"d/m/Y H:i" }})</small>
+        </li>
+      {% empty %}
+        <p>Ainda não há comentários. Sê o primeiro!</p>
+      {% endfor %}
+    </ul>
+
+    <h3>Deixar um comentário:</h3>
+    <form method="POST">
+      {% csrf_token %}
+      <textarea name="texto" rows="4" cols="50" required placeholder="Escreve aqui o teu comentário..."></textarea>
+      <br><br>
+      <button type="submit" style="padding: 10px; cursor: pointer;">Submeter Comentário</button>
+    </form>
+    <br>
+    <a href="{% url 'detalhe_artigo' artigo.id %}">Voltar ao artigo</a>
+</body>
+</html>
